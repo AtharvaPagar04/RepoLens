@@ -73,40 +73,67 @@ export function RepoExplorer({ repo, onBack }) {
       {error && <div style={{ color: 'var(--danger)', marginBottom: '1rem' }}>{error}</div>}
 
       <div className="explorer-layout">
-        <div className="panel">
-          <div className="panel-header">File Tree</div>
-          {loadingTree ? (
-            <div className="panel-content">Loading tree...</div>
-          ) : (
-            <FileTree 
-              tree={tree} 
-              onSelectFile={handleSelectFile} 
-              selectedFile={selectedFile} 
-            />
-          )}
-        </div>
         
-        <div className="panel" style={{ borderLeft: '1px solid var(--border-color)', borderRight: '1px solid var(--border-color)' }}>
-          <div className="panel-header">Blocks in File</div>
-          {loadingBlocks ? (
-            <div className="panel-content">Loading blocks...</div>
-          ) : (
-            <BlockList 
-              blocks={blocks} 
-              onSelectBlock={handleSelectBlock} 
-              selectedBlockId={selectedBlockId} 
-            />
-          )}
-        </div>
+        {!selectedBlockId && (
+          <div className={`panel ${selectedFile ? 'resizable-panel' : ''}`} style={{ flex: selectedFile ? 'none' : 1, width: selectedFile ? '350px' : '100%' }}>
+            <div className="panel-header">File Tree</div>
+            {loadingTree ? (
+              <div className="panel-content">Loading tree...</div>
+            ) : (
+              <FileTree 
+                tree={tree} 
+                onSelectFile={handleSelectFile} 
+                selectedFile={selectedFile} 
+              />
+            )}
+          </div>
+        )}
+        
+        {selectedFile && (
+          <div 
+            className={`panel ${selectedBlockId ? 'resizable-panel' : ''}`} 
+            style={{ 
+              flex: selectedBlockId ? 'none' : 1, 
+              width: selectedBlockId ? '350px' : 'auto',
+              minWidth: 0,
+              borderLeft: '1px solid var(--border-color)', 
+              borderRight: '1px solid var(--border-color)' 
+            }}
+          >
+            <div className="panel-header" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              {selectedBlockId && (
+                <button 
+                  className="btn-secondary" 
+                  style={{ padding: '2px 8px', fontSize: '0.75rem' }}
+                  onClick={() => { setSelectedBlockId(null); setSelectedBlockDetail(null); }}
+                >
+                  &larr; Tree
+                </button>
+              )}
+              <span>Blocks in File</span>
+            </div>
+            {loadingBlocks ? (
+              <div className="panel-content">Loading blocks...</div>
+            ) : (
+              <BlockList 
+                blocks={blocks} 
+                onSelectBlock={handleSelectBlock} 
+                selectedBlockId={selectedBlockId} 
+              />
+            )}
+          </div>
+        )}
 
-        <div className="panel">
-          <div className="panel-header">Block Inspector</div>
-          {loadingBlockDetail ? (
-            <div className="panel-content">Loading block details...</div>
-          ) : (
-            <BlockInspector block={selectedBlockDetail} />
-          )}
-        </div>
+        {selectedBlockId && (
+          <div className="panel" style={{ flex: 1, minWidth: 0 }}>
+            <div className="panel-header">Block Inspector</div>
+            {loadingBlockDetail ? (
+              <div className="panel-content">Loading block details...</div>
+            ) : (
+              <BlockInspector block={selectedBlockDetail} />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

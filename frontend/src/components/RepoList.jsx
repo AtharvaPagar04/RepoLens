@@ -36,7 +36,7 @@ export function RepoList({ repos, onOpen, onRefresh }) {
               <div>
                 <h4 style={{ margin: '0 0 0.5rem 0' }}>{repo.name}</h4>
                 <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '0.5rem' }}>
-                  Source: {repo.source_type} {repo.local_path ? `(${repo.local_path})` : ''}
+                  Source: {repo.source_url ? repo.source_url : 'Local'} {repo.local_path ? `(${repo.local_path})` : ''}
                 </div>
                 <div className="flex-row" style={{ gap: '0.5rem' }}>
                   <span className="badge">Files: {repo.file_count || 0}</span>

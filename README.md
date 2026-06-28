@@ -1,6 +1,6 @@
 # RepoLens
 
-Phase 1 backend scaffold for repository indexing and code block inspection.
+Phase 1 repository explorer for importing codebases, extracting code blocks, and inspecting indexed files through a FastAPI backend and Vite frontend.
 
 ## Backend V1 Scope
 
@@ -42,6 +42,13 @@ npm install
 npm run dev
 ```
 
+## Frontend Build
+
+```bash
+cd ~/RepoLens/frontend
+npm run build
+```
+
 ## Available Endpoints
 
 - `GET /health`
@@ -64,10 +71,12 @@ cd ~/RepoLens
 
 ## Current Limitations
 
+- Authentication and authorization are not implemented.
 - GitHub import is synchronous in V1.
 - Existing local clones are reused as-is; V1 does not fetch or pull updates yet.
 - Private GitHub repositories are not supported yet.
 - LLM summaries are not implemented.
 - Embeddings and vector search are not implemented.
+- Chatbot features are not implemented.
 - Caller/callee graph traversal is not implemented.
 - Parser coverage is best-effort for JS, TS, and TSX.
